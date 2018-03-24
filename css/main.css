@@ -5,12 +5,20 @@
 body{
     font-family:arial,sans-serif;
     font-size:100%;
-    margin:1em;
     background:#666;
     color:#fff;
+    min-height: 100vh;        
+}
+.wrapper{
+    display: block;
+    padding: 3rem;
+}
+h1{
+    margin-bottom: 2rem;
+    font-family: serif;
 }
 h2{
-    font-size:100%;
+    font-size:1.75rem;
     font-weight:normal;
 }
 
@@ -19,11 +27,12 @@ ul,li{
 }
 ul{
     overflow:hidden;
-    padding:3em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
 }
 ul li a{
     text-decoration:none;
-    color:#000;
+    color:#222;
     background:#ffc;
     display:block;
     height:10em;
@@ -35,19 +44,20 @@ ul li a{
     -moz-transition:-moz-transform .15s linear;
     -o-transition:-o-transform .15s linear;
     -webkit-transition:-webkit-transform .15s linear;
+    cursor: pointer;
 }
 ul li{
-    margin:1em;
+    margin:1.5em;
     float:left;
 }
 ul li h2{
-    font-size:140%;
+    font-size:1.25rem;
     font-weight:bold;
     padding-bottom:10px;
 }
 ul li p{
     font-family:"Reenie Beanie",arial,sans-serif;
-    font-size:180%;
+    color: #444;
 }
 ul li a{
     -webkit-transform: rotate(-6deg);
@@ -78,9 +88,9 @@ ul li:nth-child(5n) a{
     top:-10px;
 }
 ul li a:hover,ul li a:focus{
-    box-shadow:10px 10px 7px rgba(0,0,0,.7);
-    -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
-    -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+    box-shadow:8px 10px 12px rgba(0,0,0,.65);
+    -moz-box-shadow:8px 10px 12px rgba(0,0,0,.65);
+    -webkit-box-shadow: 8px 10px 12px rgba(0,0,0,.65);
     -webkit-transform: scale(1.25);
     -moz-transform: scale(1.25);
     -o-transform: scale(1.25);
@@ -92,12 +102,41 @@ ol li{display:inline;padding-right:1em;}
 ol li a{color:#fff;}
 
 .create-note a {
-    background-color: #c6c8ca;
-    color: #999999;
+    background-color: #9da3b3;
+    color: #fff;
+    font-weight: bold;
     line-height: 9;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 ul li p{
-    font-size:95%;
+    font-size: 1rem;
     font-weight:normal;
+}
+.menu-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+.menu{
+    position: fixed;
+    z-index: 103;
+    background: #fff;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    color: #444;    
+    box-shadow: 5px 7px 10px rgba(33,33,33,.7)
+}
+.menu-option{
+    display: block;
+    padding: .75rem 1rem;
+    cursor: pointer;
+}
+.menu-option:hover{
+    background: #eee;
 }
