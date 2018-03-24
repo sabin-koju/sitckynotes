@@ -53,7 +53,7 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
     //update note
     function onUpdateNoteClick(id) {
         id = id.charAt(1);
-        var latestNoteList = JSON.parse(localStorage.getItem("noteList"));
+        let latestNoteList = JSON.parse(localStorage.getItem("noteList"));
 
         var html = "<div class=\"modal-container\">\n" +
             "    <section class=\"create-modal\">\n" +
@@ -73,7 +73,7 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
             "</div>";
 
         document.getElementById('modal-container').innerHTML = html;
-        clickOutsideModal();
+        clickOutsideModal();  //listner for click outside
 
         document.getElementById('cancel-button').addEventListener('click', function () {
             document.getElementById('modal-container').innerHTML = "";
@@ -103,22 +103,6 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
         });
     }
 
-    //menu
-    function openMenu(id) {
-        id = id.charAt(1);
-        var latestNoteList = JSON.parse(localStorage.getItem("noteList"));
-
-        // var html =
-        //     "    <div class=\"menu\">\n" +
-        //     "        <span class=\"menu-option\" id=\"updateOption\">\n" +
-        //     "        Update </span>\n" +
-        //     "        <span class=\"menu-option\" id=\"deleteOption\">\n" + 
-        //     "        Delete</span>\n" +
-        //     "    </div>";
-        // console.log(html);
-        // document.getElementById('menu-container').innerHTML = html;
-    }
-
     //append nodes to html logics
     function notesCreate(data) {
         const NOTE_UL = document.getElementById('note-li');
@@ -142,7 +126,7 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
         }
     }
 
-    //edit notes logics
+    //edit notes and menu logics
     function addListnerNotes() {
         document.querySelectorAll(".note-block").forEach(function (el) {
             // even listner for notes for editing
@@ -152,15 +136,55 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
             }, false);
             //event listner for notes for context menu
             el.addEventListener('contextmenu', function (e) {
+                let selectedNoteId = this.id;
                 e.preventDefault();
-                openMenu(this.id);
-                document.querySelector('.menu').style.display = 'flex';
+                appendMenu();
+
+                document.getElementById('updateMenu').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    onUpdateNoteClick(selectedNoteId);
+                    document.getElementById('menuContainer').innerHTML = "";
+                });
+                document.getElementById('deleteMenu').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    onDeleteNoteClick(selectedNoteId);
+                    document.getElementById('menuContainer').innerHTML = "";
+                });
                 document.querySelector('.menu').style.left = e.pageX + 'px';
                 document.querySelector('.menu').style.top = e.pageY + 'px';
                 clickOutsideMenu();
             });
+
+            window.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            })
         });
     }
+
+    //menu
+    function onDeleteNoteClick(id) {
+        let newid = id.charAt(1);
+        let latestNoteList = JSON.parse(localStorage.getItem("noteList"));
+
+        console.log("delete ma gako list", latestNoteList);
+        latestNoteList.splice(newid, 1);
+
+        localStorage.setItem('noteList', JSON.stringify(latestNoteList));
+        location.reload();
+    }
+
+    //append menu to notes
+    function appendMenu() {
+        document.getElementById('menuContainer').innerHTML = "";
+        var html = "<div class=\"menu\">\n" +
+            "       <div class=\"menu-option\" id=\"updateMenu\">Update</div>\n" +
+            "       <div class=\"menu-option\" id=\"deleteMenu\">Delete</div>\n" +
+            "</div>\n";
+        var menuBase = document.createElement('div');
+        menuBase.innerHTML = html;
+        document.getElementById('menuContainer').appendChild(menuBase);
+    }
+
 
     // check if local notes exist on sotrage
     function checkNotesLocal() {
@@ -182,10 +206,11 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
             e.stopPropagation();
         });
     }
-    function clickOutsideMenu(){
+    function clickOutsideMenu() {
         //menu event
         document.querySelector('body').addEventListener('click', function () {
-            document.querySelector('.menu').style.display = "none";
+            document.getElementById('menuContainer').innerHTML = "";
+
         });
         document.querySelector('.menu').addEventListener('click', function (e) {
             e.stopPropagation();
