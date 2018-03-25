@@ -47,7 +47,7 @@ ul li a{
     cursor: pointer;
 }
 ul li{
-    margin:1.5em;
+    padding:1.5em;
     float:left;
 }
 ul li h2{
