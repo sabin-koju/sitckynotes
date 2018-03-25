@@ -1,6 +1,5 @@
 if (JSON.parse(localStorage.getItem("noteList"))) {
     var noteList = JSON.parse(localStorage.getItem("noteList"));
-
 } else {
     var noteList = [];
 }
@@ -103,27 +102,15 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
         });
     }
 
-    //append nodes to html logics
-    function notesCreate(data) {
-        const NOTE_UL = document.getElementById('note-li');
-        //appending notes element to html
-        for (i = 0; i < data.length; i++) {
-            var new_li = document.createElement("li");
-            var new_a = document.createElement("a");
-            var new_h2 = document.createElement("h2");
-            var new_p = document.createElement("p");
-
-            new_li.setAttribute("id", "a" + i);
-            let h2_text = document.createTextNode(data[i].title);
-            let p_text = document.createTextNode(data[i].details);
-            new_p.appendChild(p_text);
-            new_h2.appendChild(h2_text);
-            new_a.appendChild(new_h2);
-            new_a.appendChild(new_p);
-            new_li.appendChild(new_a);
-            new_li.setAttribute("class", 'note-block');
-            var text = NOTE_UL.appendChild(new_li);
-        }
+    //modal events - close
+    function clickOutsideModal() {
+        //modal event
+        document.querySelector('.modal-container').addEventListener('click', function () {
+            document.querySelector('#modal-container').innerHTML = "";
+        });
+        document.querySelector('.create-modal').addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
     }
 
     //edit notes and menu logics
@@ -165,10 +152,8 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
     function onDeleteNoteClick(id) {
         let newid = id.charAt(1);
         let latestNoteList = JSON.parse(localStorage.getItem("noteList"));
-
-        console.log("delete ma gako list", latestNoteList);
+        //delete selected id
         latestNoteList.splice(newid, 1);
-
         localStorage.setItem('noteList', JSON.stringify(latestNoteList));
         location.reload();
     }
@@ -177,35 +162,15 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
     function appendMenu() {
         document.getElementById('menuContainer').innerHTML = "";
         var html = "<div class=\"menu\">\n" +
-            "       <div class=\"menu-option\" id=\"updateMenu\">Update</div>\n" +
-            "       <div class=\"menu-option\" id=\"deleteMenu\">Delete</div>\n" +
+            "        <div class=\"menu-option\" id=\"updateMenu\">Update</div>\n" +
+            "        <div class=\"menu-option\" id=\"deleteMenu\">Delete</div>\n" +
             "</div>\n";
         var menuBase = document.createElement('div');
         menuBase.innerHTML = html;
         document.getElementById('menuContainer').appendChild(menuBase);
     }
 
-
-    // check if local notes exist on sotrage
-    function checkNotesLocal() {
-        localNotes = JSON.parse(localStorage.getItem("noteList"));
-        if (localNotes) {
-            for (i = 0; i < localNotes.length; i++) {
-                console.log(localNotes[i]);
-            }
-        }
-    }
-
-    //modal events - close
-    function clickOutsideModal() {
-        //modal event
-        document.querySelector('.modal-container').addEventListener('click', function () {
-            document.querySelector('#modal-container').innerHTML = "";
-        });
-        document.querySelector('.create-modal').addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-    }
+    //menu clickoutside
     function clickOutsideMenu() {
         //menu event
         document.querySelector('body').addEventListener('click', function () {
@@ -217,6 +182,108 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
         });
     }
 
+    // check if local notes exist on sotrage
+    function checkNotesLocal() {
+        localNotes = JSON.parse(localStorage.getItem("noteList"));
+        if (localNotes) {
+            for (i = 0; i < localNotes.length; i++) {
+                // console.log(localNotes[i]);
+            }
+        }
+    }
+
+    //append notes to html logics
+    function notesCreate(data) {
+        const NOTE_UL = document.getElementById('note-ul');
+        //appending notes element to html
+        for (i = 0; i < data.length; i++) {
+            var new_li = document.createElement("li");
+            var new_a = document.createElement("a");
+            var new_h2 = document.createElement("h2");
+            var new_p = document.createElement("p");
+
+            new_li.setAttribute("id", "a" + i);
+            new_li.setAttribute("draggable", "true");
+            let h2_text = document.createTextNode(data[i].title);
+            let p_text = document.createTextNode(data[i].details);
+            new_p.appendChild(p_text);
+            new_h2.appendChild(h2_text);
+            new_a.appendChild(new_h2);
+            new_a.appendChild(new_p);
+            new_li.appendChild(new_a);
+            new_li.setAttribute("class", 'note-block');
+            var text = NOTE_UL.appendChild(new_li);
+        }
+    }
+
+    //drag and drop notes
+    var dragSrcEl = null;
+    function handleDragStart(e) {
+        // Target (this) element is the source node.
+        dragSrcEl = this;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.outerHTML);
+        this.classList.add('dragElem');
+    }
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault(); // Necessary. Allows us to drop.
+        }
+        this.classList.add('over');
+        e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+        return false;
+    }
+    function handleDragEnter(e) {
+        // this / e.target is the current hover target.
+    }
+    function handleDragLeave(e) {
+        this.classList.remove('over');  // this / e.target is previous target element.
+    }
+    function handleDrop(e) {
+        // this/e.target is current target element.
+        if (e.stopPropagation) {
+            e.stopPropagation(); // Stops some browsers from redirecting.
+        }
+        // Don't do anything if dropping the same column we're dragging.
+        if (dragSrcEl != this) {
+            this.parentNode.removeChild(dragSrcEl);
+            var dropHTML = e.dataTransfer.getData('text/html');
+            this.insertAdjacentHTML('beforebegin', dropHTML);
+            var dropElem = this.previousSibling;
+            addDnDHandlers(dropElem);
+        }
+        this.classList.remove('over');
+
+        //save to local storage after drop
+        let localStorageNoteList = JSON.parse(localStorage.getItem("noteList"));
+        let domNoteList = [];
+        var x = document.querySelectorAll('.note-block');
+        for (let i = 0; i < localStorageNoteList.length; i++) {
+            let newtitle = x[i].querySelector('h2').innerHTML;
+            let newdetail = x[i].querySelector('p').innerHTML;
+            var notes = new Object();
+            // save to local storage
+            notes.title = newtitle;
+            notes.details = newdetail;
+            domNoteList.push(notes);
+        }
+        localStorage.setItem('noteList', JSON.stringify(domNoteList));
+
+        return false;
+    }
+    function handleDragEnd(e) {
+        // this/e.target is the source node.
+        this.classList.remove('over');
+    }
+    function addDnDHandlers(elem) {
+        elem.addEventListener('dragstart', handleDragStart, false);
+        elem.addEventListener('dragenter', handleDragEnter, false)
+        elem.addEventListener('dragover', handleDragOver, false);
+        elem.addEventListener('dragleave', handleDragLeave, false);
+        elem.addEventListener('drop', handleDrop, false);
+        elem.addEventListener('dragend', handleDragEnd, false);
+    }
+
     //main function
     function main() {
         document.getElementById('add-note').addEventListener('click', onCreateNoteClick);
@@ -226,7 +293,8 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
             notesCreate(localNotes);
         }
         addListnerNotes();
+        var cols = document.querySelectorAll('#note-ul .note-block');
+        [].forEach.call(cols, addDnDHandlers);
     }
     main();
-
 })();
