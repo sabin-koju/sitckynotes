@@ -268,7 +268,7 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
             domNoteList.push(notes);
         }
         localStorage.setItem('noteList', JSON.stringify(domNoteList));
-
+        location.reload();
         return false;
     }
     function handleDragEnd(e) {
