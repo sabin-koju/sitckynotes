@@ -1,15 +1,14 @@
-if (JSON.parse(localStorage.getItem("noteList"))) {
-    var noteList = JSON.parse(localStorage.getItem("noteList"));
-} else {
-    var noteList = [];
-}
-
-var Note = function (title, details){
-    this.title = title;
-    this.details = details;
-};
-
 (function () {
+    if (JSON.parse(localStorage.getItem("noteList"))) {
+        var noteList = JSON.parse(localStorage.getItem("noteList"));
+    } else {
+        var noteList = [];
+    }
+    var Note = function (title, details) {
+        this.title = title;
+        this.details = details;
+    };
+
     // create note
     function onCreateNoteClick() {
         var html = "<div class=\"modal-container\">\n" +
@@ -30,19 +29,20 @@ var Note = function (title, details){
             "</div>";
 
         document.getElementById('modal-container').innerHTML = html;
+        document.getElementById('note-title').focus();
         clickOutsideModal();
 
         document.getElementById('cancel-button').addEventListener('click', function () {
             document.getElementById('modal-container').innerHTML = "";
         });
         document.getElementById('save-button').addEventListener('click', function () {
-                        
+
             // user input
             inputTitle = document.getElementById('note-title').value;
             inputDetails = document.getElementById('note-details').value;
-            
+
             // creating new object
-            var note1 = new Note(inputTitle,inputDetails);
+            var note1 = new Note(inputTitle, inputDetails);
 
             // notelist array push new note object
             noteList.push(note1);
@@ -60,12 +60,13 @@ var Note = function (title, details){
     function onUpdateNoteClick(id) {
         id = id.charAt(1);
         let latestNoteList = JSON.parse(localStorage.getItem("noteList"));
+        console.log('start', latestNoteList[id]);
 
         var html = "<div class=\"modal-container\">\n" +
             "    <section class=\"create-modal\">\n" +
             "        <div class=\"form-group title\">\n" +
             "            <label class=\"sr-only\">Title</label>\n" +
-            "            <input type=\"text\" placeholder=\"Title...\" class=\"form-control\" id='note-title' value=" + latestNoteList[id].title + ">\n" +
+            "            <input type=\"text\" placeholder=\"Title...\" class=\"form-control\" id='note-title'>\n" +
             "        </div>\n" +
             "        <div class=\"form-group\">\n" +
             "            <label class=\"sr-only\">Content</label>\n" +
@@ -79,6 +80,8 @@ var Note = function (title, details){
             "</div>";
 
         document.getElementById('modal-container').innerHTML = html;
+        document.getElementById('note-title').value = latestNoteList[id].title;
+        document.getElementById('note-title').focus();
         clickOutsideModal();  //listner for click outside
 
         document.getElementById('cancel-button').addEventListener('click', function () {
