@@ -1,112 +1,139 @@
-*{
-    margin:0;
-    padding:0;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-body{
-    font-family:arial,sans-serif;
-    font-size:100%;
-    background:#666;
-    color:#fff;
-    min-height: 100vh;       
+
+body {
+    font-family: arial, sans-serif;
+    font-size: 100%;
+    background: #666;
+    color: #fff;
+    min-height: 100vh;
 }
-.wrapper{
+
+.wrapper {
     display: block;
     padding: 3rem;
 }
-h1{
+
+h1 {
     margin-bottom: 2rem;
     font-family: serif;
 }
-h2{
-    font-size:1.75rem;
-    font-weight:normal;
+
+h2 {
+    font-size: 1.75rem;
+    font-weight: normal;
+    font-family: cursive;
 }
 
-ul,li{
-    list-style:none;
+ul,
+li {
+    list-style: none;
 }
-ul{
-    overflow:hidden;
+
+ul {
+    overflow: hidden;
     padding-top: 1rem;
     padding-bottom: 2rem;
 }
-ul li a{
-    text-decoration:none;
-    color:#222;
-    background:#ffc;
-    display:block;
-    height:10em;
-    width:10em;
-    padding:1em;
-    -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
-    -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
-    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
-    transition:-moz-transform .15s linear;
-    -moz-transition:-moz-transform .15s linear;
-    -o-transition:-o-transform .15s linear;
-    -webkit-transition:-webkit-transform .15s linear;
+
+ul li a {
+    text-decoration: none;
+    color: #222;
+    background: #ffc;
+    display: block;
+    height: 12em;
+    width: 12em;
+    padding: 1em;
+    -moz-box-shadow: 5px 5px 7px rgba(33, 33, 33, 1);
+    -webkit-box-shadow: 5px 5px 7px rgba(33, 33, 33, .7);
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, .7);
+    transition: -moz-transform .15s linear;
+    -moz-transition: -moz-transform .15s linear;
+    -o-transition: -o-transform .15s linear;
+    -webkit-transition: -webkit-transform .15s linear;
     cursor: pointer;
 }
-ul li{
-    padding:1.5em;
-    float:left;
+
+ul li {
+    padding: 1.5em;
+    float: left;
 }
-ul li h2{
-    font-size:1.25rem;
-    font-weight:bold;
-    padding-bottom:10px;
+
+ul li h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding-bottom: 10px;
 }
-ul li p{
-    font-family:"Reenie Beanie",arial,sans-serif;
+
+ul li p {
+    font-family: "Reenie Beanie", arial, sans-serif;
     color: #444;
 }
-ul li a{
+
+ul li a {
     transform: rotate(-6deg);
     -webkit-transform: rotate(-6deg);
     -o-transform: rotate(-6deg);
-    -moz-transform:rotate(-6deg);
+    -moz-transform: rotate(-6deg);
 }
-ul li:nth-child(even) a{
-    transform:rotate(4deg);
-    -o-transform:rotate(4deg);
-    -webkit-transform:rotate(4deg);
-    -moz-transform:rotate(4deg);
-    position:relative;
-    top:5px;
-    background:#cfc;
+
+ul li:nth-child(even) a {
+    transform: rotate(4deg);
+    -o-transform: rotate(4deg);
+    -webkit-transform: rotate(4deg);
+    -moz-transform: rotate(4deg);
+    position: relative;
+    top: 5px;
+    background: #cfc;
 }
-ul li:nth-child(3n) a{
-    transform:rotate(-3deg);
-    -o-transform:rotate(-3deg);
-    -webkit-transform:rotate(-3deg);
-    -moz-transform:rotate(-3deg);
-    position:relative;
-    top:-5px;
-    background:#ccf;
+
+ul li:nth-child(3n) a {
+    transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    position: relative;
+    top: -5px;
+    background: #ccf;
 }
-ul li:nth-child(5n) a{
+
+ul li:nth-child(5n) a {
     transform: rotate(5deg);
-    -o-transform:rotate(5deg);
-    -webkit-transform:rotate(5deg);
-    -moz-transform:rotate(5deg);
-    position:relative;
-    top:-10px;
+    -o-transform: rotate(5deg);
+    -webkit-transform: rotate(5deg);
+    -moz-transform: rotate(5deg);
+    position: relative;
+    top: -10px;
 }
-ul li a:hover,ul li a:focus{
-    box-shadow:8px 10px 12px rgba(0,0,0,.65);
-    -moz-box-shadow:8px 10px 12px rgba(0,0,0,.65);
-    -webkit-box-shadow: 8px 10px 12px rgba(0,0,0,.65);
+
+ul li a:hover,
+ul li a:focus {
+    box-shadow: 8px 10px 12px rgba(0, 0, 0, .65);
+    -moz-box-shadow: 8px 10px 12px rgba(0, 0, 0, .65);
+    -webkit-box-shadow: 8px 10px 12px rgba(0, 0, 0, .65);
     transform: scale(1.25);
     -webkit-transform: scale(1.25);
     -moz-transform: scale(1.25);
     -o-transform: scale(1.25);
-    position:relative;
-    z-index:5;
+    position: relative;
+    z-index: 5;
 }
 
-ol{text-align:center;}
-ol li{display:inline;padding-right:1em;}
-ol li a{color:#fff;}
+ol {
+    text-align: center;
+}
+
+ol li {
+    display: inline;
+    padding-right: 1em;
+}
+
+ol li a {
+    color: #fff;
+}
 
 .create-note a {
     background-color: #9da3b3;
@@ -117,20 +144,21 @@ ol li a{color:#fff;}
     align-items: center;
     justify-content: center;
 }
-ul li p{
+
+ul li p {
     font-size: 1rem;
-    font-weight:normal;
+    font-weight: normal;
 }
 
-.note-block{
+.note-block {
     position: relative;
 }
 
-.note-block a{
+.note-block a {
     position: relative;
 }
 
-.note-block a::before{
+.note-block a::before {
     content: '';
     background: url(../images/pin.png) no-repeat center;
     background-size: contain;
@@ -141,38 +169,44 @@ ul li p{
     width: 30px;
 }
 
-.menu{
+.menu {
     position: absolute;
     z-index: 103;
     background: #fff;
     border-radius: 3px;
     display: flex;
     flex-direction: column;
-    color: #444;    
-    box-shadow: 5px 7px 10px rgba(33,33,33,.7);
+    color: #444;
+    box-shadow: 5px 7px 10px rgba(33, 33, 33, .7);
 }
-.menu-option{
+
+.menu-option {
     display: block;
     padding: .75rem 1rem;
     cursor: pointer;
 }
-.menu-option:hover{
+
+.menu-option:hover {
     background: #eee;
 }
 
+
 /*draggable*/
+
 [draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
 }
+
 .note-block.dragElem {
-  opacity: 0.75;
+    opacity: 0.75;
 }
+
 .note-block.over {
     transform: scale(.9);
 }

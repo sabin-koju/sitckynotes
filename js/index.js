@@ -13,6 +13,7 @@
     function onCreateNoteClick() {
         var html = "<div class=\"modal-container\">\n" +
             "    <section class=\"create-modal\">\n" +
+            "         <div class=\"modal-header\">\n" + " <strong>Create Note</strong> " + "</div>\n" +
             "        <div class=\"form-group title\">\n" +
             "            <label class=\"sr-only\">Title</label>\n" +
             "            <input type=\"text\" placeholder=\"Title...\" class=\"form-control\" id='note-title'>\n" +
@@ -64,6 +65,7 @@
 
         var html = "<div class=\"modal-container\">\n" +
             "    <section class=\"create-modal\">\n" +
+            "         <div class=\"modal-header\">\n" + "<strong>Update Note</strong> " + "</div>\n" +
             "        <div class=\"form-group title\">\n" +
             "            <label class=\"sr-only\">Title</label>\n" +
             "            <input type=\"text\" placeholder=\"Title...\" class=\"form-control\" id='note-title'>\n" +
