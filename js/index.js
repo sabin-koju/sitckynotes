@@ -4,6 +4,11 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
     var noteList = [];
 }
 
+var Note = function (title, details){
+    this.title = title;
+    this.details = details;
+};
+
 (function () {
     // create note
     function onCreateNoteClick() {
@@ -31,14 +36,16 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
             document.getElementById('modal-container').innerHTML = "";
         });
         document.getElementById('save-button').addEventListener('click', function () {
+                        
+            // user input
+            inputTitle = document.getElementById('note-title').value;
+            inputDetails = document.getElementById('note-details').value;
+            
             // creating new object
-            var notes = new Object();
-
-            notes.title = document.getElementById('note-title').value;
-            notes.details = document.getElementById('note-details').value;
+            var note1 = new Note(inputTitle,inputDetails);
 
             // notelist array push new note object
-            noteList.push(notes);
+            noteList.push(note1);
 
             //close modal
             // document.getElementById('modal-container').innerHTML = "";
@@ -81,24 +88,24 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
             //get old data
             console.log("this is selected id = ", id);
 
-            // creating new object
-            var notes = new Object();
-
             //get user input
-            notes.title = document.getElementById('note-title').value;
-            notes.details = document.getElementById('note-details').value;
+            title = document.getElementById('note-title').value;
+            details = document.getElementById('note-details').value;
             document.getElementById('modal-container').innerHTML = "";
 
+            // creating new object
+            var note1 = new Note(title, details);
+
             //save to local storage
-            latestNoteList[id].title = notes.title;
-            latestNoteList[id].details = notes.details;
+            latestNoteList[id].title = title;
+            latestNoteList[id].details = details;
             localStorage.setItem('noteList', JSON.stringify(latestNoteList));
 
             //update to html           
             let selectedh2 = "#a" + id + " h2";
             let selectedP = "#a" + id + " p";
-            document.querySelector(selectedh2).innerHTML = notes.title;
-            document.querySelector(selectedP).innerHTML = notes.details;
+            document.querySelector(selectedh2).innerHTML = title;
+            document.querySelector(selectedP).innerHTML = details;
         });
     }
 
@@ -261,11 +268,9 @@ if (JSON.parse(localStorage.getItem("noteList"))) {
         for (let i = 0; i < localStorageNoteList.length; i++) {
             let newtitle = x[i].querySelector('h2').innerHTML;
             let newdetail = x[i].querySelector('p').innerHTML;
-            var notes = new Object();
             // save to local storage
-            notes.title = newtitle;
-            notes.details = newdetail;
-            domNoteList.push(notes);
+            let note1 = new Note(newtitle, newdetail);
+            domNoteList.push(note1);
         }
         localStorage.setItem('noteList', JSON.stringify(domNoteList));
         location.reload();
