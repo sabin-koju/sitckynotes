@@ -4,10 +4,22 @@
     } else {
         var noteList = [];
     }
-    var Note = function (title, details) {
+
+    var NoteObj = function (title, details) {
         this.title = title;
         this.details = details;
     };
+
+    function Note(title, details) {
+        var instance;
+        Note = function () {
+            return instance;
+        };
+        instance = new Note();
+        instance.title = title;
+        instance.details = details;
+        return instance;
+    }
 
     // create note
     function onCreateNoteClick() {
@@ -43,7 +55,8 @@
             inputDetails = document.getElementById('note-details').value;
 
             // creating new object
-            var note1 = new Note(inputTitle, inputDetails);
+            // var note1 = new Note(inputTitle, inputDetails);
+            var note1 = Note(inputTitle, inputDetails);
 
             // notelist array push new note object
             noteList.push(note1);
@@ -99,7 +112,7 @@
             document.getElementById('modal-container').innerHTML = "";
 
             // creating new object
-            var note1 = new Note(title, details);
+            var note1 = Note(title, details);
 
             //save to local storage
             latestNoteList[id].title = title;
@@ -265,18 +278,19 @@
             addDnDHandlers(dropElem);
         }
         this.classList.remove('over');
-
+        let domNoteList = [];
         //save to local storage after drop
         let localStorageNoteList = JSON.parse(localStorage.getItem("noteList"));
-        let domNoteList = [];
         var x = document.querySelectorAll('.note-block');
         for (let i = 0; i < localStorageNoteList.length; i++) {
             let newtitle = x[i].querySelector('h2').innerHTML;
             let newdetail = x[i].querySelector('p').innerHTML;
             // save to local storage
-            let note1 = new Note(newtitle, newdetail);
+            console.log(newtitle, newdetail);
+            let note1 = new NoteObj(newtitle, newdetail);
             domNoteList.push(note1);
         }
+        console.log(domNoteList);
         localStorage.setItem('noteList', JSON.stringify(domNoteList));
         location.reload();
         return false;
